@@ -1,1 +1,18 @@
+# Step 1 - > I will create a table along with window funtion ( Row_number()) and get the difference column between id and rownumber column.
 
+# Step 2 - > then I wil count unique difference
+
+# Step 3 - > On final stage, I will fetch only those rows where count was more than three. 
+
+with cte as
+(select *,
+row_number() over(order by id) as rn,
+id - row_number() over(order by id) as diff
+from stadium
+where people>=100)
+
+, ctee as
+(select *, count(*) over(partition by diff order by visit_date range between unbounded preceding and unbounded following) 
+cnt from cte)
+
+select id,visit_date,people from ctee where cnt>=3
