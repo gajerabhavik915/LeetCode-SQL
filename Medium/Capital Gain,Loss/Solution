@@ -1,1 +1,6 @@
+HInt - According to query's requirement, Here I gave minues sign to sold product.
+       Then get the sum of all unique product.
 
+select stock_name, SUM(case when operation = 'Sell' then price else -price end) as capital_gain_loss
+from stocks
+group by stock_name
