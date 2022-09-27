@@ -1,1 +1,11 @@
+WITH T1 AS 
+    (SELECT emp.id as empid, emp.name as empname, emp.salary,emp.departmentid as de_id,
+     dept.name as dept_name,
+     max(emp.salary) over(partition by dept.name) as salary1
+    FROM EMPLOYEE AS EMP
+    LEFT JOIN DEPARTMENT AS DEPT ON EMP.DEPARTMENTID = dept.id)
 
+select t1.dept_name as department, t1.empname as Employee, t1.salary
+from t1
+where salary = salary1
+order by empid;
