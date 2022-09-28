@@ -1,1 +1,11 @@
-
+with t1 as 
+    (select *,
+    case 
+        when id%2 <> 0 then lead(id, 1, id) over(order by id) 
+        else lag(id) over(order by id )
+    end as id2
+    from seat)
+    
+select t1.id2 as id, t1.student
+from t1
+order by id2;
